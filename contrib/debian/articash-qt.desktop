@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=1.0
+Name=articash Core
+Comment=articash P2P Cryptocurrency
+Comment[fr]=articash, monnaie virtuelle cryptographique pair à pair
+Comment[tr]=articash, eşten eşe kriptografik sanal para birimi
+Exec=articash-qt %u
+Terminal=false
+Type=Application
+Icon=articash128
+MimeType=x-scheme-handler/articash;
+Categories=Office;Finance;
+StartupWMClass=articash-qt

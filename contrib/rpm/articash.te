@@ -1,0 +1,81 @@
+policy_module(articash, 1.100.1)
+
+########################################
+#
+# Declarations
+#
+
+type articash_t;
+type articash_exec_t;
+init_daemon_domain(articash_t, articash_exec_t)
+
+permissive articash_t;
+
+type articash_initrc_exec_t;
+init_script_file(articash_initrc_exec_t)
+
+type articash_conf_t;
+files_type(articash_conf_t)
+
+type articash_var_lib_t;
+files_type(articash_var_lib_t)
+
+type articash_var_run_t;
+files_type(articash_var_run_t)
+
+type articash_port_t;
+corenet_port(articash_port_t)
+
+########################################
+#
+# articash local policy
+#
+allow articash_t self:process { fork };
+
+allow articash_t self:fifo_file rw_fifo_file_perms;
+allow articash_t self:unix_stream_socket create_stream_socket_perms;
+
+manage_dirs_pattern(articash_t, articash_conf_t, articash_conf_t)
+manage_files_pattern(articash_t, articash_conf_t, articash_conf_t)
+
+manage_dirs_pattern(articash_t, articash_var_lib_t, articash_var_lib_t)
+manage_files_pattern(articash_t, articash_var_lib_t, articash_var_lib_t)
+files_var_lib_filetrans(articash_t, articash_var_lib_t, { dir file })
+
+manage_dirs_pattern(articash_t, articash_var_run_t, articash_var_run_t)
+manage_files_pattern(articash_t, articash_var_run_t, articash_var_run_t)
+
+sysnet_dns_name_resolve(articash_t)
+corenet_all_recvfrom_unlabeled(articash_t)
+
+allow articash_t self:tcp_socket create_stream_socket_perms;
+corenet_tcp_sendrecv_generic_if(articash_t)
+corenet_tcp_sendrecv_generic_node(articash_t)
+corenet_tcp_sendrecv_all_ports(articash_t)
+corenet_tcp_bind_generic_node(articash_t)
+
+gen_require(`
+    type articash_port_t;
+')
+allow articash_t articash_port_t:tcp_socket name_bind;
+
+gen_require(`
+    type articash_port_t;
+')
+allow articash_t articash_port_t:tcp_socket name_connect;
+
+domain_use_interactive_fds(articash_t)
+
+files_read_etc_files(articash_t)
+
+miscfiles_read_localization(articash_t)
+
+sysnet_dns_name_resolve(articash_t)
+
+allow articash_t articash_exec_t:file execute_no_trans;
+allow articash_t self:process setsched;
+corecmd_exec_ls(articash_t)
+corenet_tcp_connect_http_port(articash_t)
+dev_read_urand(articash_t)
+fs_getattr_xattr_fs(articash_t)
+kernel_read_system_state(articash_t)

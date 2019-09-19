@@ -1,0 +1,6 @@
+usr/local/bin/articash-qt usr/bin
+share/pixmaps/articash32.xpm usr/share/pixmaps
+share/pixmaps/articash16.xpm usr/share/pixmaps
+share/pixmaps/articash128.png usr/share/pixmaps
+debian/articash-qt.desktop usr/share/applications
+debian/articash-qt.protocol usr/share/kde4/services/

@@ -1,0 +1,3 @@
+usr/local/bin/articashd usr/bin
+usr/local/bin/articash-cli usr/bin
+debian/examples/articash.conf etc/articash
